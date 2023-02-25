@@ -1,6 +1,7 @@
 #header {
     padding-top: 20%;
     color: white;
+    font-size: 4em;
 }
 
 .center {
@@ -8,20 +9,21 @@
     /*display: flex;*/
     /*justify-content: center;*/
     /*margin: auto;*/
-     position: absolute;
+     /* position: absolute; */
     /*top: 43%;*/
-    align-text : center;
+    text-align: center;
 }
 
 
 
 #instructions {
     color: white;
+    font-size: 2em;
 }
 
 
 body {
-    height: 90vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     background-color: #2952b3;
@@ -29,16 +31,20 @@ body {
 
 #background {
     width: 98vw;
-    height: 98vh;
-    background: url(pixil-frame-0-2.png) no-repeat;
+    height: 100vh;
+    background-image: url("pixil-frame-0-2.png");
     background-size: cover;
     background-position: bottom;
     text-align: center;
+    text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
 }
 
 #boat{
     height: 100px;
     position: absolute;
     top: 37%;
-
 }
