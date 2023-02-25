@@ -5,9 +5,12 @@
 
 .center {
 
-    display: flex;
-    justify-content: center;
-    margin: auto;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*margin: auto;*/
+     position: absolute;
+    /*top: 43%;*/
+    align-text : center;
 }
 
 
@@ -31,4 +34,11 @@ body {
     background-size: cover;
     background-position: bottom;
     text-align: center;
+}
+
+#boat{
+    height: 100px;
+    position: absolute;
+    top: 37%;
+
 }
