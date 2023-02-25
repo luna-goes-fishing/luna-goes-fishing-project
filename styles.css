@@ -1,51 +1,34 @@
-/*#image {*/
-/*    max-width: 70vw;*/
-    /*height: 60%;*/
-/*    height: auto;*/
-    /*object-fit: cover;*/
-    /*margin-bottom: auto;*/
-/*}*/
-
-/**{*/
-/*    width : 100vw;*/
-/*    height: 100vh;*/
-/*}*/
-
-
-
-body{
-    background-color: #48ADF0;
-    background-image: url("pixil-frame-0-2.png");
-    /*background-position: center;*/
-    /*display: flex;*/
-    /*justify-content : center;*/
-/*    width : 70vw;*/
-/*    height : 90vh;*/
-}
-
-#header{
-    display: flex;
-    justify-content: center;
-    /*margin-top: 20%;*/
+#header {
+    padding-top: 20%;
     color: white;
 }
 
-.center{
-    
+.center {
+
     display: flex;
     justify-content: center;
     margin: auto;
 }
 
-/*#header{*/
-   /*margin-top: auto;*/
-/*}*/
 
-/*#image{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*}*/
 
-#instructions{
+#instructions {
     color: white;
+}
+
+
+body {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    background-color: #2952b3;
+}
+
+#background {
+    width: 98vw;
+    height: 98vh;
+    background: url(pixil-frame-0-2.png) no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    text-align: center;
 }
