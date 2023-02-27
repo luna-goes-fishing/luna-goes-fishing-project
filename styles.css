@@ -26,7 +26,7 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    background-color: #2952b3 !important;
+    background-color: #2952b3;
 }
 
 #background {
@@ -48,3 +48,4 @@ body {
     position: absolute;
     top: 37%;
 }
+
