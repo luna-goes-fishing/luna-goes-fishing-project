@@ -14,8 +14,8 @@ loadSprite("boat", "./game-assets/boat.png")
 
 // Define player movement speed (pixels per second)
 const SPEED = 500
+const  BULLET_SPEED = 145 
 
-// Add player game object
 const player = add([
 	sprite("boat"),
 	pos(400, 300),
@@ -24,7 +24,6 @@ const player = add([
 	area()
 ])
 
-// onKeyDown() registers an event that runs every frame as long as user is holding a certain key
 onKeyDown("left", () => {
 	if(player.pos.x > 1){
 		player.move(-SPEED, 0);
@@ -39,15 +38,6 @@ onKeyDown("right", () => {
 
 onKeyDown("down", () => {
 	console.log(player.pos.x);
-})
-
-player.onUpdate(() => {
-	// .isHovering() is provided by area() component, which returns a boolean of if the object is currently being hovered on
-	if (player.isHovering()) {
-		player.color = rgb(0, 0, 255)
-	} else {
-		player.color = rgb()
-	}
 })
 
 add([
@@ -67,12 +57,32 @@ timer.onUpdate(() => {
 		timer.text = `Time: ${timer.userTimer.toFixed()}`
 	}
 })
-player.onUpdate(() => {
-	// .isHovering() is provided by area() component, which returns a boolean of if the object is currently being hovered on
-	if (player.isHovering()) {
-		player.color = rgb(0, 0, 255)
-	} else {
-		player.color = rgb()
-	}
+
+function spawnHook(p) {
+	const hook = add([
+		rect(12, 48),,
+		pos(p),
+		origin('bot'),
+		color(0, 0, 0),
+		outline(4),
+		move(DOWN, BULLET_SPEED),
+		// strings here means a tag
+		"hook",
+	])
+	hook.onUpdate(() => {
+		hook.pos.x = player.pos.x + 100;
+		hook.height += 1
+		if(hook.pos.y > height()){
+			destroy(hook)
+		}
+		console.log(hook.pos.y)
+	})
+	
+}
+
+onKeyPress("space", () => {
+	spawnHook(player.pos.sub(0, -200))
 })
+
+
 debug.inspect = true
