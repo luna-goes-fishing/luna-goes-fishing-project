@@ -39,9 +39,11 @@ const userScores = {
   Laura: 10000,
   Gonzalo: 9000,
   Itzel: 8000,
-  Laura: 10000,
-  Laura: 10000,
+  Luna: 7000,
+  Fonzi: 4000,
 }
+
+
 
 let currentScore = 0;
 
