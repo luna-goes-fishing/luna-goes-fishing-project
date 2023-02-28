@@ -26,6 +26,11 @@ kaboom();
 // });
 
 loadSprite("fishingScreen", "fishingScreen.png")
+loadSprite("fish", "./sprites/fish.png");
+loadSprite("fishOne", "./sprites/fish.png");
+loadSprite("fishTwo", "./sprites/fish.png");
+loadSprite("fishThree", "./sprites/fish.png");
+loadSprite("boat", "sprites/boat.png");
 
 
 scene("start", () => {
@@ -80,10 +85,7 @@ scene("game", () => {
     fixed()
   ])
   //where mathew's code is
-  loadSprite("fish", "./sprites/fish.png");
-  loadSprite("fishOne", "./sprites/fish.png");
-  loadSprite("fishTwo", "./sprites/fish.png");
-  loadSprite("fishThree", "./sprites/fish.png");
+  
 
   const SPEED = 350;
   const speedOne = 100;
