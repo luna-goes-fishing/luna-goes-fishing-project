@@ -70,12 +70,6 @@ add([
 	pos(12, 12),
 	{ update() {this.text = `Score: ${userScore}`}}
 ])
-
-const timerText = (rgb1,rgb2,rgb3) => 
-{
-	return rgb1,rgb2,rgb3
-}
-
 const timer = add([
 	// text() component is similar to sprite() but renders text
 	text(`Time: [${timeLeft}].timeVal`, 
