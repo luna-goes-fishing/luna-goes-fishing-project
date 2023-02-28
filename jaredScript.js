@@ -37,20 +37,30 @@ const fish = add([
 ])
 
 onKeyDown("left", () => {
+	player.angle = 6;
+	// player.quad(0, 0, 1, 1)
+	player.flipX(true);
 	if(player.pos.x > 1){
 		player.move(-SPEED, 0);
 	}
 })
 
 onKeyDown("right", () => {
+	player.angle = -6
+	player.flipX(false)
 	if(player.pos.x < 790){
 		player.move(SPEED, 0);
 	}
+})
+onKeyRelease(["left","right"], ()=>{
+	console.log('1')
+	player.angle = 0
 })
 
 onKeyDown("down", () => {
 	console.log(player.pos.x);
 })
+
 
 
 let userScore = 0
@@ -60,17 +70,35 @@ add([
 	pos(12, 12),
 	{ update() {this.text = `Score: ${userScore}`}}
 ])
+
+const timerText = (rgb1,rgb2,rgb3) => 
+{
+	return rgb1,rgb2,rgb3
+}
+
 const timer = add([
 	// text() component is similar to sprite() but renders text
-	text(`Time: ${timeLeft}`, { width: width() / 2 }),
+	text(`Time: [${timeLeft}].timeVal`, 
+		{ 
+			width: width() / 2, 
+			styles:{
+				"timeVal":{
+					color: rgb(128, 128, 255)
+				}
+			}
+		}
+	),
 	pos(500, 12),
 	{userTimer: 45 }
 ])
+
 timer.onUpdate(() => {
+	let innerTime = `Time: ${Math.abs(timer.userTimer.toFixed(2))}`
+	timer.userTimer -= dt()
 	if(timer.userTimer > 0){
-		timer.userTimer -= dt()
-		timer.text = `Time: ${Math.abs(timer.userTimer.toFixed(2))}`
+		console.log(timer)
 	}
+	
 })
 
 
