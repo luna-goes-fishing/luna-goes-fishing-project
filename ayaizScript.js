@@ -71,8 +71,8 @@ scene("instructionPage", () => {
     fixed()
   ])
   const heloo = add([text("Figure it out"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
-  const closed = add([text("Close page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
-  closed.onClick(() => go("gameEnd"))
+  const closed = add([text("Close Page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+  closed.onClick(() => go("start"))
 })
 
 // GAMEPLAY 
