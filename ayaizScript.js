@@ -1,5 +1,30 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
+// kaboom({
+//     // Initialize the game
+//     global: true,
+//     fullscreen: true,
+//     scale: 1,
+//     background: [68, 118, 207],
+//     // canvas: document.querySelector("#background")
+//   });
+//   loadSprite("background", "pixil-frame-0-2.png");
+//   add([
+//     sprite("background"),
+//     pos(1, 0),
+//     pos(width() / 2, height() / 2),
+//     origin("center"),
+//     scale(0.4999, 0.4),
+  
+//     layer("background")
+//   ]);
+// const backround = document.querySelector("body")
+// console.log(backround)
+// kaboom({
+//   // canvas: backround
+
+// });
+
 kaboom();
 
 loadSprite("fishingScreen", "fishingScreen.png")
@@ -46,8 +71,8 @@ scene("instructionPage", () => {
     fixed()
   ])
   const heloo = add([text("Figure it out"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
-  const closed = add([text("Close page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
-  closed.onClick(() => go("gameEnd"))
+  const closed = add([text("Close Page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+  closed.onClick(() => go("start"))
 })
 
 // GAMEPLAY 
@@ -181,4 +206,73 @@ scene("gameEnd", () => {
 
 go("start");
 
- 
+
+// kaboom(
+//     // global: true,
+//     // canvas: document.querySelector("#background")
+// );
+
+
+
+// const startBtn = document.getElementById("header")
+// const howToBtn = document.getElementById("instructions")
+
+// startBtn.addEventListener('click', e => {kaboom() 
+
+    
+// })
+
+
+// function gameStart() {
+
+//     startBtn.addEventListener("click", e => {
+//         startBtn.innerHTML = ""
+//         howToBtn.innerHTML = ""
+//         // or remove elements entirely
+//         // startBtn.remove()
+//         // howToBtn.remove()
+
+//         //start timer for game
+//         // timer()
+
+//     })
+
+// }
+
+
+
+//when timer hits 0, call restartBtn()
+// function restartBtn() {
+//     document.getElementById("overlay").style.display = "block";
+//     const restart = document.getElementById("btn")
+
+//     restart.addEventListener("click", e => {
+//         document.getElementById("overlay").style.display = "none";
+//         console.log("click")
+
+
+//         //reset score to 0
+
+//         // restart timer
+//         // timer()
+
+//     })
+// }
+
+
+// function howTO(){
+//     howToBtn.addEventListener("click", => {
+        
+//     })
+// }
+
+// gameStart()
+
+
+    // wait(3, () => {
+    //   console.log("hello")
+    // })
+
+
+
+// restartBtn()
