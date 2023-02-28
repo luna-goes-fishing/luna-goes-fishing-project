@@ -90,26 +90,26 @@ scene("game", () => {
   const SPEED = 350;
   const speedOne = 100;
 
-  loop(rand(2.5, 6), () => {
+  loop(rand(2.5, 5), () => {
     add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(110, 450), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
   });
-  loop(rand(2.5, 6), () => {
+  loop(rand(2.5, 5), () => {
     add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(110, 550), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
   });
-  loop(rand(2.5, 6), () => {
+  loop(rand(1.5, 3), () => {
     add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(110, 650), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
   });
   onUpdate("fish", (fish) => {
-    fish.move(150, 0);
+    fish.move(200, 0);
     if (fish.pos.x > 1210) {
       destroy(fish);
     }
