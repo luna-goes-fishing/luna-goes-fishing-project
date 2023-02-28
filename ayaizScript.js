@@ -30,8 +30,8 @@ loadSprite("fish", "./sprites/fish.png");
 loadSprite("fishOne", "./sprites/fish.png");
 loadSprite("fishTwo", "./sprites/fish.png");
 loadSprite("fishThree", "./sprites/fish.png");
-loadSprite("boat", "sprites/boat.png");
-
+loadSprite("boat", "./sprites/boat.png");
+loadSprite("hook", "./sprites/hook.png")
 
 scene("start", () => {
   const bg = add([
@@ -144,8 +144,9 @@ scene("game", () => {
   onKeyRelease(["left","right"], ()=>{
     boat.angle = 0
   });
-  let hookStatus = false
 
+  let hookStatus = false
+  const BULLET_SPEED = 300 
   function spawnHook(p) {
     if(!hookStatus){
       hookStatus = true
@@ -166,19 +167,20 @@ scene("game", () => {
         destroy(hook)
         
         hookStatus = false
-        userScore += 100
+        // userScore += 100
       })
       hook.onUpdate(() => {
         if(hook.pos.y > height()){
           destroy(hook)
           hookStatus = false;
         }
-      })
-      onKeyPress("space", () => {
-        spawnHook(boat.pos.sub(-100, -300))
-      })
-    }	
+      }) 
+    }
   }
+  onKeyPress("space", () => {
+    spawnHook(boat.pos.sub(0, -100))
+    console.log(3)
+  })	
 
   })
 
