@@ -25,6 +25,8 @@ kaboom();
 
 // });
 
+kaboom();
+
 loadSprite("fishingScreen", "fishingScreen.png")
 loadSprite("fish", "./sprites/fish.png");
 loadSprite("fishOne", "./sprites/fish.png");
@@ -32,6 +34,9 @@ loadSprite("fishTwo", "./sprites/fish.png");
 loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png")
+
+const userScores = {}
+
 
 scene("start", () => {
   const bg = add([
@@ -50,10 +55,9 @@ scene("start", () => {
   startText.onClick(() => go("game"))
   const howTo = add([text("How to Play"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   howTo.onClick(() => go("instructionPage"))
-  // bg.scaleTo(Math.max(width(), height()))
 })
 
-
+//INSTRUCTIONS
 
 scene("instructionPage", () => {
   const bg = add([
@@ -71,7 +75,7 @@ scene("instructionPage", () => {
   closed.onClick(() => go("gameEnd"))
 })
 
-
+// GAMEPLAY 
 
 scene("game", () => {
   const bg = add([
@@ -84,26 +88,33 @@ scene("game", () => {
     scale(1),
     fixed()
   ])
+  const boat = add([
+    sprite("boat"),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    pos(center()),
+    scale(0.3, 0.3),
+    action("boat"),
+  ]);
   //where mathew's code is
   
-
   const SPEED = 350;
   const speedOne = 100;
-
+  
   loop(rand(2.5, 5), () => {
-    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(110, 450), "fish"]),
+    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(110, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
   });
   loop(rand(2.5, 5), () => {
-    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(110, 550), "fish"]),
+    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(110, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
   });
   loop(rand(1.5, 3), () => {
-    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(110, 650), "fish"]),
+    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(110, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
@@ -114,22 +125,11 @@ scene("game", () => {
       destroy(fish);
     }
   });
-
-  loadSprite("boat", "./sprites/boat.png");
-
-  const boat = add([
-    sprite("boat"),
-    pos(width() / 2, height() / 2),
-    origin("center"),
-    pos(center()),
-    scale(0.3, 0.3),
-    action("boat"),
-  ]);
-
+  
   onKeyDown("left", () => {
     boat.angle = 6;
     boat.flipX(true);
-    if (boat.pos.x > 200) {
+    if (boat.pos.x > 0 + 100) {
       boat.move(-SPEED, 0);
     }
   });
@@ -137,7 +137,7 @@ scene("game", () => {
   onKeyDown("right", () => {
     boat.angle = -6
 	  boat.flipX(false)
-    if (boat.pos.x < 1235) {
+    if (boat.pos.x < width() - 100) {
       boat.move(SPEED, 0);
   }
   });
@@ -179,12 +179,11 @@ scene("game", () => {
   }
   onKeyPress("space", () => {
     spawnHook(boat.pos.sub(0, -100))
-    console.log(3)
   })	
+})
 
-  })
 
-
+// END GAME
 
 scene("gameEnd", () => {
   const bg = add([
