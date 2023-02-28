@@ -1,3 +1,5 @@
+
+
 #header {
     padding-top: 20%;
     color: white;
@@ -26,25 +28,25 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    background-color: #2952b3;
+    background-color: #2952b3 ;
 }
 
 #background {
-    width: 98vw;
-    height: 100vh;
-    background-image: url("pixil-frame-0-2.png");
-    background-size: cover;
-    background-position: bottom;
-    text-align: center;
-    text-shadow:
+    width: 98vw ;
+    height: 100vh ;
+    background-image: url("pixil-frame-0-2.png") ; 
+    background-size: cover ;
+    background-position: bottom ;
+    text-align: center ;
+    text-shadow :
    -1px -1px 0 #000,  
     1px -1px 0 #000,
     -1px 1px 0 #000,
-     1px 1px 0 #000;
+     1px 1px 0 #000 ;
 }
 
 #boat{
-    height: 100px;
-    position: absolute;
-    top: 37%;
+    height: 100px !important;
+    position: absolute !important;
+    top: 37% !important;
 }
