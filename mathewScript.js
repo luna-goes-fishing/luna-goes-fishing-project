@@ -6,11 +6,11 @@ kaboom({
   background: [68, 118, 207],
 });
 
-loadSprite("background", "pixil-frame-0-2.png");
-loadSprite("fish", "fish.png");
-loadSprite("fishOne", "fish.png");
-loadSprite("fishTwo", "fish.png");
-loadSprite("fishThree", "fish.png");
+loadSprite("background", "./sprites/pixil-frame-0-2.png");
+loadSprite("fish", "./sprites/fish.png");
+loadSprite("fishOne", "./sprites/fish.png");
+loadSprite("fishTwo", "./sprites/fish.png");
+loadSprite("fishThree", "./sprites/fish.png");
 
 add([
   sprite("background"),
