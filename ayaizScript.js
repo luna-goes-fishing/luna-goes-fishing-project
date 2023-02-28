@@ -167,7 +167,7 @@ scene("game", () => {
   function spawnHook(p) {
     if(!hookStatus){
       hookStatus = true
-      wait(0.5 , () => {
+      wait(0.2 , () => {
         const hook = add([
           sprite("hook"),,
           pos(p),
