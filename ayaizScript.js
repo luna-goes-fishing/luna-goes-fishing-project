@@ -35,8 +35,15 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png")
 
-const userScores = {}
+const userScores = {
+  Laura: 10000,
+  Gonzalo: 9000,
+  Itzel: 8000,
+  Laura: 10000,
+  Laura: 10000,
+}
 
+let currentScore = 0;
 
 scene("start", () => {
   const bg = add([
@@ -79,6 +86,7 @@ scene("instructionPage", () => {
 // GAMEPLAY 
 
 scene("game", () => {
+  currentScore = 0;
   const bg = add([
     sprite("fishingScreen", {
       width: width(),
@@ -97,33 +105,42 @@ scene("game", () => {
     scale(0.3, 0.3),
     action("boat"),
   ]);
-  //where mathew's code is
   
+     
   const SPEED = 350;
   const speedOne = 100;
   
+  //FISH SPAWN
+
+  //LEFT
+
   loop(rand(2.5, 5), () => {
-    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(110, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
   });
   loop(rand(2.5, 5), () => {
-    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(110, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
   });
   loop(rand(1.5, 3), () => {
-    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(110, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
   });
+
+
+
+  let random = rand(150,500)
   onUpdate("fish", (fish) => {
     fish.move(200, 0);
-    if (fish.pos.x > 1210) {
+    if (fish.pos.x > width()) {
       destroy(fish);
+      console.log(1)
     }
   });
   
@@ -151,36 +168,76 @@ scene("game", () => {
   function spawnHook(p) {
     if(!hookStatus){
       hookStatus = true
-      const hook = add([
-        sprite("hook"),,
-        pos(p),
-        area(),
-        scale(0.1),
-        origin('bot'),
-        color(0, 0, 0),
-        outline(4),
-        move(DOWN, BULLET_SPEED),
-        // strings here means a tag
-        "hookdeploy",
-      ])
-      hook.onCollide("fish", (fish) => {
-        destroy(fish)
-        destroy(hook)
-        
-        hookStatus = false
-        // userScore += 100
-      })
-      hook.onUpdate(() => {
-        if(hook.pos.y > height()){
+      wait(0.5 , () => {
+        const hook = add([
+          sprite("hook"),,
+          pos(p),
+          area(),
+          scale(0.1),
+          origin('bot'),
+          color(0, 0, 0),
+          outline(4),
+          move(DOWN, BULLET_SPEED),
+          // strings here means a tag
+          "hookdeploy",
+        ])
+        hook.onCollide("fish", (fish) => {
+          destroy(fish)
           destroy(hook)
-          hookStatus = false;
-        }
+          
+          hookStatus = false
+          currentScore += 100
+        })
+        hook.onUpdate(() => {
+          if(hook.pos.y > height()){
+            destroy(hook)
+            hookStatus = false;
+          }
+        })
       }) 
     }
   }
+  
   onKeyPress("space", () => {
     spawnHook(boat.pos.sub(0, -100))
-  })	
+  })
+
+  //TIMER & SCORE
+
+  const score = add([
+		text(0),
+		pos(width() - 100, 80),
+    origin("center"),
+		fixed(),
+	])
+  
+  const timer = add([
+		text(0),
+		pos(width()/2, 80),
+    origin("center"),
+		fixed(),
+		{ time: 45, },
+	])
+  timer.onUpdate(() => {
+    score.text = currentScore
+
+		timer.time -= dt()
+    if(timer.time > 10){
+      timer.text = timer.time.toFixed(0)
+    }else {
+      timer.text = timer.time.toFixed(2)
+    }
+    if(timer.time < 0){
+      console.log(true)
+      go("gameEnd");
+      console.log(currentScore)
+    }
+	})
+  
+
+
+
+   
 })
 
 
