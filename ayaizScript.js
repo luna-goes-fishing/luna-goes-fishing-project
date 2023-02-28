@@ -79,9 +79,9 @@ scene("game", () => {
     scale(1),
     fixed()
   ])
+  //where mathew's code is
 
-
-  add([text("The game has started"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center")]);
+  
 })
 
 
