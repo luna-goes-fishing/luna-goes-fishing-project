@@ -70,7 +70,8 @@ scene("instructionPage", () => {
     scale(1),
     fixed()
   ])
-  const heloo = add([text("Figure it out"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
+  const heloo = add([text("Move with Arrow keys"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
+  const yeloo = add([text("Spacebar to drop hook"), pos(width() / 2, height() / 2.3),scale(.75,.75), origin("center"), area()]);
   const closed = add([text("Close Page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   closed.onClick(() => go("start"))
 })
