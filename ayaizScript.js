@@ -91,19 +91,19 @@ scene("game", () => {
   const speedOne = 100;
 
   loop(rand(2.5, 8), () => {
-    add([sprite("fishOne"), scale(0.3, 0.29), pos(110, 450), "fish"]),
+    add([sprite("fishOne"), scale(0.3, 0.29), area() ,pos(110, 450), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
   });
   loop(rand(2.5, 9), () => {
-    add([sprite("fishTwo"), scale(0.3, 0.29), pos(110, 550), "fish"]),
+    add([sprite("fishTwo"), scale(0.3, 0.29), area(), pos(110, 550), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
   });
   loop(rand(2.5, 10), () => {
-    add([sprite("fishThree"), scale(0.3, 0.29), pos(110, 650), "fish"]),
+    add([sprite("fishThree"), scale(0.3, 0.29), area() ,pos(110, 650), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
@@ -127,18 +127,60 @@ scene("game", () => {
   ]);
 
   onKeyDown("left", () => {
+    boat.angle = 6;
+    boat.flipX(true);
     if (boat.pos.x > 200) {
       boat.move(-SPEED, 0);
     }
   });
 
   onKeyDown("right", () => {
+    boat.angle = -6
+	  boat.flipX(false)
     if (boat.pos.x < 1235) {
       boat.move(SPEED, 0);
-    }
+  }
   });
-  
-})
+  onKeyRelease(["left","right"], ()=>{
+    boat.angle = 0
+  });
+  let hookStatus = false
+
+  function spawnHook(p) {
+    if(!hookStatus){
+      hookStatus = true
+      const hook = add([
+        sprite("hook"),,
+        pos(p),
+        area(),
+        scale(0.2),
+        origin('bot'),
+        color(0, 0, 0),
+        outline(4),
+        move(DOWN, BULLET_SPEED),
+        // strings here means a tag
+        "hookdeploy",
+      ])
+      hook.onCollide("fish", (fish) => {
+        destroy(fish)
+        destroy(hook)
+        
+        hookStatus = false
+        userScore += 100
+      })
+      hook.onUpdate(() => {
+        if(hook.pos.y > height()){
+          destroy(hook)
+          hookStatus = false;
+        }
+      })
+      onKeyPress("space", () => {
+        spawnHook(boat.pos.sub(-100, -300))
+      })
+    }	
+  }
+
+  })
 
 
 
