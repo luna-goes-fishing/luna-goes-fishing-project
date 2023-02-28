@@ -35,8 +35,13 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png")
 
-const userScores = {}
-
+const userScores = {
+  Laura: 10000,
+  Gonzalo: 9000,
+  Itzel: 8000,
+  Laura: 10000,
+  Laura: 10000,
+}
 
 scene("start", () => {
   const bg = add([
