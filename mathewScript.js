@@ -17,7 +17,7 @@ add([
   pos(1, 0),
   pos(width() / 2, height() / 2),
   origin("center"),
-  scale(0.4999, 0.4),
+  scale(.5),
   layer("background"),
 ]);
 
