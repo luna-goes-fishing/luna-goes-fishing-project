@@ -21,35 +21,29 @@ add([
   layer("background"),
 ]);
 
-const SPEED = 850;
+const SPEED = 350;
 const speedOne = 100;
 
-const level = {
-  width: 54,
-  height: 95,
-  "=": () => [sprite("fish"), "fish", area(), scale(0.3, 0.29)],
-};
-
-loop(rand(15), () => {
+loop(rand(2.5, 8), () => {
   add([sprite("fishOne"), scale(0.3, 0.29), pos(110, 450), "fish"]),
     onUpdate("fishOne", (fOne) => {
-      fOne.move(100, 0);
+    //   fOne.move(100, 0);
     });
 });
-loop(rand(10), () => {
+loop(rand(2.5, 9), () => {
   add([sprite("fishTwo"), scale(0.3, 0.29), pos(110, 550), "fish"]),
     onUpdate("fishTwo", (fTwo) => {
-      fTwo.move(100, 0);
+    //   fTwo.move(70, 0);
     });
 });
-loop(rand(10), () => {
+loop(rand(2.5, 10), () => {
   add([sprite("fishThree"), scale(0.3, 0.29), pos(110, 650), "fish"]),
     onUpdate("fishThree", (fThree) => {
-      fThree.move(100, 0);
+    //   fThree.move(0, 0);
     });
 });
 onUpdate("fish", (fish) => {
-  fish.move(125, 0);
+  fish.move(150, 0);
   if (fish.pos.x > 1210) {
     destroy(fish);
   }
@@ -67,7 +61,6 @@ const boat = add([
 ]);
 
 onKeyDown("left", () => {
-  // .move() is provided by pos() component, move by pixels per second
   if (boat.pos.x > 200) {
     boat.move(-SPEED, 0);
   }
