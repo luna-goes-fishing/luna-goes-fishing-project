@@ -90,20 +90,20 @@ scene("game", () => {
   const SPEED = 350;
   const speedOne = 100;
 
-  loop(rand(2.5, 8), () => {
-    add([sprite("fishOne"), scale(0.3, 0.29), area() ,pos(110, 450), "fish"]),
+  loop(rand(2.5, 6), () => {
+    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(110, 450), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
   });
-  loop(rand(2.5, 9), () => {
-    add([sprite("fishTwo"), scale(0.3, 0.29), area(), pos(110, 550), "fish"]),
+  loop(rand(2.5, 6), () => {
+    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(110, 550), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
   });
-  loop(rand(2.5, 10), () => {
-    add([sprite("fishThree"), scale(0.3, 0.29), area() ,pos(110, 650), "fish"]),
+  loop(rand(2.5, 6), () => {
+    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(110, 650), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
@@ -154,7 +154,7 @@ scene("game", () => {
         sprite("hook"),,
         pos(p),
         area(),
-        scale(0.2),
+        scale(0.1),
         origin('bot'),
         color(0, 0, 0),
         outline(4),
