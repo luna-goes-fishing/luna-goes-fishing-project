@@ -784,7 +784,7 @@ scene("thirdLvlPage", () => {
     fixed(),
   ]);
   const thirdText = add([
-    text("third Level"),
+    text("Third Level"),
     pos(center()),
     scale(0.75, 0.75),
     origin("center"),
@@ -792,7 +792,7 @@ scene("thirdLvlPage", () => {
   ])
 
   const nextLvl = add([
-    text("Click here or Here to Start"),
+    text("Click here or Enter to Start"),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
     origin("center"),
