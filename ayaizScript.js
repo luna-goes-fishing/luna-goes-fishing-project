@@ -125,25 +125,37 @@ scene("game", () => {
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
+    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    onUpdate("fishOne", (fOne) => {
+    //   fOne.move(100, 0);
+    });
   });
   loop(rand(2.5, 5), () => {
     add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
+    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    onUpdate("fishTwo", (fTwo) => {
+    //   fTwo.move(70, 0);
+    });
   });
   loop(rand(1.5, 3), () => {
     add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
+    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    onUpdate("fishThree", (fThree) => {
+    //   fThree.move(0, 0);
+    });
   });
 
 
 
   let random = rand(150,500)
   onUpdate("fish", (fish) => {
-    fish.move(200, 0);
+    fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
     }
@@ -217,7 +229,9 @@ scene("game", () => {
 	])
   
   const timer = add([
-		text(0),
+		text(0,{
+      size: 40,
+    }), 
 		pos(width()/2, 80),
     origin("center"),
 		fixed(),
@@ -258,9 +272,9 @@ scene("gameEnd", () => {
 
   // userScore()
   // highScore()
-  const restart = add([text("Click here or spacebar restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+  const restart = add([text("Click here or R to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   restart.onClick(() => go("start"))
-  onKeyPress("space", () => {
+  onKeyPress("r", () => {
     go("start")
   })
 })
