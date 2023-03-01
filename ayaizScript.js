@@ -35,13 +35,13 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png");
 loadSprite("shark", "./sprites/shark.png");
-loadSprite("turtle", "./sprites/turtle.png");
 
 //HS vars
 
 //usernames correlate with the index of highscores;
 
 let currentUser = "";
+let targetScore = 2000;
 const userNames = ["King Julien", "Gonzalo", "Laura", "Luna", "Itzel"];
 const userHighScores = [10000, 9000, 8000, 2000, 1000];
 
@@ -54,7 +54,7 @@ function newName(winnerName) {
     currentUser = input;
   }
 }
-newName();
+// newName();
 
 //CHECKING HS
 function nameInsert(index) {
@@ -163,6 +163,18 @@ scene("game", () => {
     scale(1),
     fixed(),
   ]);
+
+  const targetText = add([
+    text("Target Scrore : 2000"),
+    // pos(center()),
+    scale(0.45, 0.45),
+    origin("topleft"),
+    
+
+    // origin(),
+    area(),
+  ]);
+  
   const boat = add([
     sprite("boat"),
     pos(width() / 2, height() / 2),
@@ -273,26 +285,6 @@ scene("game", () => {
       destroy(shark);
     }
   });
-  // Turtle spawn
-  loop(rand(5, 10), () => {
-    add([
-      sprite("turtle"),
-      scale(0.3, 0.3),
-      area({ width: 540, height: 300, offset: vec2(40, 50) }),
-      pos(0, rand(boat.pos.y + 100, height() - 10)),
-      "turtle",
-    ]),
-      onUpdate("turtle", (fThree) => {
-        //   fThree.move(0, 0);
-      });
-  });
-  let ranturt = rand(150, 500);
-  onUpdate("turtle", (turtle) => {
-    turtle.move(100, 0);
-    if (turtle.pos.x > width()) {
-      destroy(turtle);
-    }
-  });
 
   onKeyDown("left", () => {
     boat.angle = 6;
@@ -346,13 +338,6 @@ scene("game", () => {
           hookStatus = false;
           currentScore += 500;
         });
-        hook.onCollide("turtle", (turtle) => {
-          destroy(turtle);
-          destroy(hook);
-
-          hookStatus = false;
-          currentScore -= 200;
-        });
         hook.onUpdate(() => {
           if (hook.pos.y > height()) {
             destroy(hook);
@@ -381,7 +366,7 @@ scene("game", () => {
     pos(width() / 2, 80),
     origin("center"),
     fixed(),
-    { time: 45 },
+    { time: 30 },
   ]);
   timer.onUpdate(() => {
     score.text = currentScore;
@@ -392,10 +377,13 @@ scene("game", () => {
     } else {
       timer.text = timer.time.toFixed(2);
     }
-    if (timer.time < 0) {
+    if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
       go("gameEnd");
       console.log(currentScore);
+    }
+    if (timer.time < 0 && targetScore <= currentScore){
+      go("secondLvlPage")
     }
   });
 });
@@ -462,7 +450,7 @@ scene("gameEnd", () => {
     fixed(),
   ]);
   const displayScore = add([
-    text(`You got: ${currentScore}`),
+    text(`Your Score: ${currentScore}`),
     pos(width() / 2, score5.pos.y + 65),
     scale(1),
     origin("center"),
@@ -473,7 +461,7 @@ scene("gameEnd", () => {
   // highScore()
   const restart = add([
     text("Click here or R to restart"),
-    pos(width() / 2, height() / 1.5),
+    pos(width() / 2, height() / 1.3),
     scale(0.75, 0.75),
     origin("center"),
     area(),
@@ -482,6 +470,552 @@ scene("gameEnd", () => {
   restart.onClick(() => go("start"));
   onKeyPress("r", () => {
     go("start");
+  });
+});
+
+
+
+
+//Second level Page
+scene("secondLvlPage",() => {
+const bg = add([
+    sprite("fishingScreen", {
+      width: width(),
+      height: height(),
+    }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    scale(1),
+    fixed(),
+  ]);
+
+  const secondText = add([
+    text("Second Level"),
+    pos(width() / 2, height() / 2),
+    scale(0.75, 0.75),
+    origin("center"),
+    area(),
+  ]);
+
+  const startText = add([
+    text("Click here to Start"),
+    pos(width() / 2, height() / 1.5),
+    scale(0.75, 0.75),
+    origin("center"),
+    area(),
+  ]);
+
+  startText.onClick(() => go("secondLvl"));
+
+})
+
+scene("secondLvl", () => {
+  let targetScore = 4000;
+  const bg = add([
+    sprite("fishingScreen", {
+      width: width(),
+      height: height(),
+    }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    scale(1),
+    fixed(),
+  ]);
+
+  const targetText = add([
+    text("Target Scrore : 4000"),
+    // pos(center()),
+    scale(0.45, 0.45),
+    origin("topleft"),
+    
+
+    // origin(),
+    area(),
+  ]);
+
+  const boat = add([
+    sprite("boat"),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    pos(center()),
+    scale(0.3, 0.3),
+    action("boat"),
+  ]);
+
+  const SPEED = 350;
+  const speedOne = 100;
+
+  //LEFT
+
+  loop(rand(2.5, 5), () => {
+    add([
+      sprite("fishOne"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishOne", (fOne) => {
+        //   fOne.move(100, 0);
+      });
+    add([
+      sprite("fishOne"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishOne", (fOne) => {
+        //   fOne.move(100, 0);
+      });
+  });
+  loop(rand(2.5, 5), () => {
+    add([
+      sprite("fishTwo"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishTwo", (fTwo) => {
+        //   fTwo.move(70, 0);
+      });
+    add([
+      sprite("fishTwo"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishTwo", (fTwo) => {
+        //   fTwo.move(70, 0);
+      });
+  });
+  loop(rand(1.5, 3), () => {
+    add([
+      sprite("fishThree"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishThree", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+    add([
+      sprite("fishThree"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishThree", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+
+  let random = rand(150, 500);
+  onUpdate("fish", (fish) => {
+    fish.move(300, 0);
+    if (fish.pos.x > width()) {
+      destroy(fish);
+      console.log(1);
+    }
+  });
+
+  // Shark sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("shark"),
+      scale(0.3, 0.3),
+      area({ width: 540, height: 300, offset: vec2(40, 50) }),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "shark",
+    ]),
+      onUpdate("shark", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranShark = rand(150, 500);
+  onUpdate("shark", (shark) => {
+    shark.move(800, 0);
+    if (shark.pos.x > width()) {
+      destroy(shark);
+    }
+  });
+
+  onKeyDown("left", () => {
+    boat.angle = 6;
+    boat.flipX(true);
+    if (boat.pos.x > 0 + 100) {
+      boat.move(-SPEED, 0);
+    }
+  });
+
+  onKeyDown("right", () => {
+    boat.angle = -6;
+    boat.flipX(false);
+    if (boat.pos.x < width() - 100) {
+      boat.move(SPEED, 0);
+    }
+  });
+  onKeyRelease(["left", "right"], () => {
+    boat.angle = 0;
+  });
+
+  let hookStatus = false;
+  const BULLET_SPEED = 300;
+  function spawnHook(p) {
+    if (!hookStatus) {
+      hookStatus = true;
+      wait(0.2, () => {
+        const hook = add([
+          sprite("hook"),
+          ,
+          pos(p),
+          area(),
+          scale(0.1),
+          origin("bot"),
+          color(0, 0, 0),
+          outline(4),
+          move(DOWN, BULLET_SPEED),
+          // strings here means a tag
+          "hookdeploy",
+        ]);
+        hook.onCollide("fish", (fish) => {
+          destroy(fish);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore += 100;
+        });
+        hook.onCollide("shark", (shark) => {
+          destroy(shark);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore += 500;
+        });
+        hook.onUpdate(() => {
+          if (hook.pos.y > height()) {
+            destroy(hook);
+            hookStatus = false;
+          }
+        });
+      });
+    }
+  }
+
+  onKeyPress("space", () => {
+    spawnHook(boat.pos.sub(0, -100));
+  });
+
+  //TIMER & SCORE
+
+  const score = add([
+    text(0),
+    pos(width() - 100, 80),
+    origin("center"),
+    fixed(),
+  ]);
+
+  const timer = add([
+    text(0),
+    pos(width() / 2, 80),
+    origin("center"),
+    fixed(),
+    { time: 25 },
+  ]);
+  timer.onUpdate(() => {
+    score.text = currentScore;
+
+    timer.time -= dt();
+    if (timer.time > 10) {
+      timer.text = timer.time.toFixed(0);
+    } else {
+      timer.text = timer.time.toFixed(2);
+    }
+    if (timer.time < 0 && targetScore >= currentScore) {
+      hsCheck(currentScore);
+      go("gameEnd");
+      console.log(currentScore);
+    }
+    if (timer.time < 0 && targetScore <= currentScore){
+      go("thirdLvlPage")
+    }
+  });
+  
+
+
+});
+
+scene("thirdLvlPage", () => {
+  const bg = add([
+    sprite("fishingScreen", {
+      width: width(),
+      height: height(),
+    }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    scale(1),
+    fixed(),
+  ]);
+  const thirdText = add([
+    text("third Level"),
+    pos(center()),
+    scale(0.75, 0.75),
+    origin("center"),
+    area(),
+  ])
+
+  const nextLvl = add([
+    text("Click here to Start"),
+    pos(width() / 2, height() / 1.5),
+    scale(0.75, 0.75),
+    origin("center"),
+    area(),
+  ])
+
+  nextLvl.onClick(() => go("thirdLvl"));
+
+});
+
+// Third level page
+
+scene("thirdLvl", () => {
+  let targetScore = 9000;
+  const bg = add([
+    sprite("fishingScreen", {
+      width: width(),
+      height: height(),
+    }),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    scale(1),
+    fixed(),
+  ]);
+
+  const targetText = add([
+    text("Target Scrore : 9000"),
+    // pos(center()),
+    scale(0.45, 0.45),
+    origin("topleft"),
+    
+
+    // origin(),
+    area(),
+  ]);
+  
+  const boat = add([
+    sprite("boat"),
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    pos(center()),
+    scale(0.3, 0.3),
+    action("boat"),
+  ]);
+
+  const SPEED = 350;
+  const speedOne = 100;
+
+  //LEFT
+
+  loop(rand(2.5, 5), () => {
+    add([
+      sprite("fishOne"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishOne", (fOne) => {
+        //   fOne.move(100, 0);
+      });
+    add([
+      sprite("fishOne"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishOne", (fOne) => {
+        //   fOne.move(100, 0);
+      });
+  });
+  loop(rand(2.5, 5), () => {
+    add([
+      sprite("fishTwo"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishTwo", (fTwo) => {
+        //   fTwo.move(70, 0);
+      });
+    add([
+      sprite("fishTwo"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishTwo", (fTwo) => {
+        //   fTwo.move(70, 0);
+      });
+  });
+  loop(rand(1.5, 3), () => {
+    add([
+      sprite("fishThree"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishThree", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+    add([
+      sprite("fishThree"),
+      scale(0.2, 0.2),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "fish",
+    ]),
+      onUpdate("fishThree", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+
+  let random = rand(150, 500);
+  onUpdate("fish", (fish) => {
+    fish.move(300, 0);
+    if (fish.pos.x > width()) {
+      destroy(fish);
+      console.log(1);
+    }
+  });
+
+  // Shark sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("shark"),
+      scale(0.3, 0.3),
+      area({ width: 540, height: 300, offset: vec2(40, 50) }),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "shark",
+    ]),
+      onUpdate("shark", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranShark = rand(150, 500);
+  onUpdate("shark", (shark) => {
+    shark.move(800, 0);
+    if (shark.pos.x > width()) {
+      destroy(shark);
+    }
+  });
+
+  onKeyDown("left", () => {
+    boat.angle = 6;
+    boat.flipX(true);
+    if (boat.pos.x > 0 + 100) {
+      boat.move(-SPEED, 0);
+    }
+  });
+
+  onKeyDown("right", () => {
+    boat.angle = -6;
+    boat.flipX(false);
+    if (boat.pos.x < width() - 100) {
+      boat.move(SPEED, 0);
+    }
+  });
+  onKeyRelease(["left", "right"], () => {
+    boat.angle = 0;
+  });
+
+  let hookStatus = false;
+  const BULLET_SPEED = 300;
+  function spawnHook(p) {
+    if (!hookStatus) {
+      hookStatus = true;
+      wait(0.2, () => {
+        const hook = add([
+          sprite("hook"),
+          ,
+          pos(p),
+          area(),
+          scale(0.1),
+          origin("bot"),
+          color(0, 0, 0),
+          outline(4),
+          move(DOWN, BULLET_SPEED),
+          // strings here means a tag
+          "hookdeploy",
+        ]);
+        hook.onCollide("fish", (fish) => {
+          destroy(fish);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore += 100;
+        });
+        hook.onCollide("shark", (shark) => {
+          destroy(shark);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore += 500;
+        });
+        hook.onUpdate(() => {
+          if (hook.pos.y > height()) {
+            destroy(hook);
+            hookStatus = false;
+          }
+        });
+      });
+    }
+  }
+
+  onKeyPress("space", () => {
+    spawnHook(boat.pos.sub(0, -100));
+  });
+
+  //TIMER & SCORE
+
+  const score = add([
+    text(0),
+    pos(width() - 100, 80),
+    origin("center"),
+    fixed(),
+  ]);
+
+  const timer = add([
+    text(0),
+    pos(width() / 2, 80),
+    origin("center"),
+    fixed(),
+    { time: 20 },
+  ]);
+  timer.onUpdate(() => {
+    score.text = currentScore;
+
+    timer.time -= dt();
+    if (timer.time > 10) {
+      timer.text = timer.time.toFixed(0);
+    } else {
+      timer.text = timer.time.toFixed(2);
+    }
+    if (timer.time < 0 && targetScore >= currentScore) {
+      hsCheck(currentScore);
+      go("gameEnd");
+      console.log(currentScore);
+    }
+    if (timer.time < 0 && targetScore <= currentScore){
+      go("gameEnd")
+    }
   });
 });
 
