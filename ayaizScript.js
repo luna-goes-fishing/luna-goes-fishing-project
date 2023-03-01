@@ -1043,6 +1043,7 @@ scene("thirdLvl", () => {
       console.log(currentScore);
     }
     if (timer.time < 0 && targetScore <= currentScore){
+      hsCheck(currentScore);
       go("gameEnd")
     }
   });
