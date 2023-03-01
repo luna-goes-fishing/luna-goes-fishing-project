@@ -35,6 +35,7 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png");
 loadSprite("shark", "./sprites/shark.png");
+loadSprite("turtle", "./sprites/turtle.png");
 
 //HS vars
 
@@ -272,6 +273,26 @@ scene("game", () => {
       destroy(shark);
     }
   });
+  // Turtle spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("turtle"),
+      scale(0.3, 0.3),
+      area({ width: 540, height: 300, offset: vec2(40, 50) }),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "turtle",
+    ]),
+      onUpdate("turtle", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranturt = rand(150, 500);
+  onUpdate("turtle", (turtle) => {
+    turtle.move(100, 0);
+    if (turtle.pos.x > width()) {
+      destroy(turtle);
+    }
+  });
 
   onKeyDown("left", () => {
     boat.angle = 6;
@@ -324,6 +345,13 @@ scene("game", () => {
 
           hookStatus = false;
           currentScore += 500;
+        });
+        hook.onCollide("turtle", (turtle) => {
+          destroy(turtle);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore = 0;
         });
         hook.onUpdate(() => {
           if (hook.pos.y > height()) {
