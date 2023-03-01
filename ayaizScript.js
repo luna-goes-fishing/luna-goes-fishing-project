@@ -178,7 +178,7 @@ scene("game", () => {
 
   let random = rand(150,500)
   onUpdate("fish", (fish) => {
-    fish.move(200, 0);
+    fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
       console.log(1)
