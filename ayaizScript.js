@@ -1,5 +1,30 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
+// kaboom({
+//     // Initialize the game
+//     global: true,
+//     fullscreen: true,
+//     scale: 1,
+//     background: [68, 118, 207],
+//     // canvas: document.querySelector("#background")
+//   });
+//   loadSprite("background", "pixil-frame-0-2.png");
+//   add([
+//     sprite("background"),
+//     pos(1, 0),
+//     pos(width() / 2, height() / 2),
+//     origin("center"),
+//     scale(0.4999, 0.4),
+  
+//     layer("background")
+//   ]);
+// const backround = document.querySelector("body")
+// console.log(backround)
+// kaboom({
+//   // canvas: backround
+
+// });
+
 kaboom();
 
 loadSprite("fishingScreen", "fishingScreen.png")
@@ -9,6 +34,7 @@ loadSprite("fishTwo", "./sprites/fish.png");
 loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png")
+
 
 //HS vars
 
@@ -84,7 +110,8 @@ scene("instructionPage", () => {
     scale(1),
     fixed()
   ])
-  const heloo = add([text("Figure it out"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
+  const yeloo = add([text("Spacebar to drop hook"), pos(width() / 2, height() / 2.4),scale(.75,.75), origin("center"), area()]);
+  const heloo = add([text("Arrow keys to move"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
   const closed = add([text("Close Page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   closed.onClick(() => go("start"))
 })
@@ -116,11 +143,9 @@ scene("game", () => {
   const SPEED = 350;
   const speedOne = 100;
   
-  //FISH SPAWN
+   //LEFT
 
-  //LEFT
-
-  loop(rand(2.5, 5), () => {
+   loop(rand(2.5, 5), () => {
     add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
@@ -151,13 +176,12 @@ scene("game", () => {
     });
   });
 
-
-
   let random = rand(150,500)
   onUpdate("fish", (fish) => {
     fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
+      console.log(1)
     }
   });
   
@@ -229,9 +253,7 @@ scene("game", () => {
 	])
   
   const timer = add([
-		text(0,{
-      size: 40,
-    }), 
+		text(0),
 		pos(width()/2, 80),
     origin("center"),
 		fixed(),
@@ -252,32 +274,38 @@ scene("game", () => {
       console.log(currentScore)
     }
 	})
+  
+
+
+
+   
 })
 
 
 // END GAME
 
 scene("gameEnd", () => {
-    console.log(userNames)
-    const bg = add([
-    sprite("fishingScreen", {
-      width: width(),
-      height: height()
-    }),
-    pos(width() / 2, height() / 2),
-    origin("center"),
-    scale(1),
-    fixed()
-  ])
+  console.log(userNames)
+  const bg = add([
+  sprite("fishingScreen", {
+    width: width(),
+    height: height()
+  }),
+  pos(width() / 2, height() / 2),
+  origin("center"),
+  scale(1),
+  fixed()
+])
 
-  // userScore()
-  // highScore()
-  const restart = add([text("Click here or R to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
-  restart.onClick(() => go("start"))
-  onKeyPress("r", () => {
-    go("start")
-  })
+// userScore()
+// highScore()
+const restart = add([text("Click here or R to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+restart.onClick(() => go("start"))
+onKeyPress("r", () => {
+  go("start")
 })
+})
+
 
 go("start");
 
