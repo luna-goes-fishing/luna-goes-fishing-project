@@ -35,12 +35,45 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png")
 
-const userScores = {
-  Laura: 10000,
-  Gonzalo: 9000,
-  Itzel: 8000,
-  Laura: 10000,
-  Laura: 10000,
+
+//HS vars
+
+//usernames correlate with the index of highscores; 
+
+let currentUser = '';
+const userNames = ["King Julien","Gonzalo","Laura","Luna","Itzel"]
+const userHighScores = [10000,9000,8000,2000,1000]
+
+
+//getting username 
+function newName(winnerName){
+  let input = prompt("Please enter your name:", "");
+  if (input == null || input == "") {
+    newName(winnerName)
+  } else {
+    currentUser = input;
+  }
+}
+newName()
+
+//CHECKING HS
+function nameInsert(index){
+  userNames.splice(index,0,currentUser);
+  userNames.pop();
+}
+
+function hsCheck(cs){
+  console.log('barrel')
+  for(let i = 0; i < userHighScores.length; i++){
+    console.log(i)
+    if(cs > userHighScores[i]){
+      userHighScores.splice(i,0,cs);
+      userHighScores.pop();
+      nameInsert(i)
+      return true
+    }
+  }
+  return false
 }
 
 let currentScore = 0;
@@ -110,30 +143,38 @@ scene("game", () => {
   const SPEED = 350;
   const speedOne = 100;
   
-  //FISH SPAWN
+   //LEFT
 
-  //LEFT
-
-  loop(rand(2.5, 5), () => {
+   loop(rand(2.5, 5), () => {
     add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishOne", (fOne) => {
       //   fOne.move(100, 0);
       });
+    add([sprite("fishOne"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    onUpdate("fishOne", (fOne) => {
+    //   fOne.move(100, 0);
+    });
   });
   loop(rand(2.5, 5), () => {
     add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishTwo", (fTwo) => {
       //   fTwo.move(70, 0);
       });
+    add([sprite("fishTwo"), scale(0.2, 0.2), area(), pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    onUpdate("fishTwo", (fTwo) => {
+    //   fTwo.move(70, 0);
+    });
   });
   loop(rand(1.5, 3), () => {
     add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
       onUpdate("fishThree", (fThree) => {
       //   fThree.move(0, 0);
       });
+    add([sprite("fishThree"), scale(0.2, 0.2), area() ,pos(0, rand(boat.pos.y + 100, height() - 10)), "fish"]),
+    onUpdate("fishThree", (fThree) => {
+    //   fThree.move(0, 0);
+    });
   });
-
-
 
   let random = rand(150,500)
   onUpdate("fish", (fish) => {
@@ -228,7 +269,7 @@ scene("game", () => {
       timer.text = timer.time.toFixed(2)
     }
     if(timer.time < 0){
-      console.log(true)
+      hsCheck(currentScore)
       go("gameEnd");
       console.log(currentScore)
     }
@@ -244,6 +285,7 @@ scene("game", () => {
 // END GAME
 
 scene("gameEnd", () => {
+  console.log(userNames)
   const bg = add([
     sprite("fishingScreen", {
       width: width(),
