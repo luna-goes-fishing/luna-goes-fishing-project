@@ -1,30 +1,5 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
-// kaboom({
-//     // Initialize the game
-//     global: true,
-//     fullscreen: true,
-//     scale: 1,
-//     background: [68, 118, 207],
-//     // canvas: document.querySelector("#background")
-//   });
-//   loadSprite("background", "pixil-frame-0-2.png");
-//   add([
-//     sprite("background"),
-//     pos(1, 0),
-//     pos(width() / 2, height() / 2),
-//     origin("center"),
-//     scale(0.4999, 0.4),
-  
-//     layer("background")
-//   ]);
-// const backround = document.querySelector("body")
-// console.log(backround)
-// kaboom({
-//   // canvas: backround
-
-// });
-
 kaboom();
 
 loadSprite("fishingScreen", "fishingScreen.png")
@@ -35,15 +10,40 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png")
 
-const userScores = {
-  Laura: 10000,
-  Gonzalo: 9000,
-  Itzel: 8000,
-  Luna: 7000,
-  Fonzi: 4000,
+//HS vars
+
+//usernames correlate with the index of highscores; 
+
+let currentUser = '';
+const userNames = ["Laura","Gonzalo","Itzel","Luna","Fonzi"]
+const userHighScores = [10000,9000,8000,2000,1000]
+
+
+//getting username 
+function newName(winnerName){
+  let input = prompt("Please enter your name:", "");
+  if (input == null || input == "") {
+    newName(winnerName)
+  } else {
+    currentUser = input;
+  }
 }
+newName()
 
+//CHECKING HS
 
+function hsCheck(cs){
+  for(let i = 0; i < userHighScores.length; i++){
+    if(cs > userHighScores[i]){
+      userHighScores.splice(i,0,cs)
+      userHighScores.pop()
+      nameInsert(i)
+      newHsInsert = i
+      return true
+    }
+    return false
+  }
+}
 
 let currentScore = 0;
 
@@ -245,7 +245,7 @@ scene("game", () => {
 // END GAME
 
 scene("gameEnd", () => {
-  const bg = add([
+    const bg = add([
     sprite("fishingScreen", {
       width: width(),
       height: height()
