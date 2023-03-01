@@ -63,7 +63,6 @@ function nameInsert(index) {
 }
 
 function hsCheck(cs) {
-  console.log("barrel");
   for (let i = 0; i < userHighScores.length; i++) {
     console.log(i);
     if (cs > userHighScores[i]) {
@@ -92,15 +91,29 @@ scene("start", () => {
   // width() / 2, height() / 2
 
   const startText = add([
-    text("Start Game"),
+    text("Start Game" ,{
+      transform: (idx, ch) => ({
+        color: rgb(255,255,255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      })
+    }),
     pos(center()),
     scale(0.75, 0.75),
     origin("center"),
-    area(),
+    area()
   ]);
   startText.onClick(() => go("game"));
   const howTo = add([
-    text("How to Play"),
+    text("How to Play",{
+      transform: (idx, ch) => ({
+        color: rgb(255,255,255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      })
+    }),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
     origin("center"),
@@ -376,6 +389,10 @@ scene("game", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
+      timer.scale = 2.5
+      timer.pos = vec2(width() / 2,200)
+      timer.origin = ("center")
+      timer.color = rgb(255,0,0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
@@ -734,6 +751,10 @@ scene("secondLvl", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
+      timer.scale = 2.5
+      timer.pos = vec2(width() / 2,200)
+      timer.origin = ("center")
+      timer.color = rgb(255,0,0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
@@ -1007,6 +1028,10 @@ scene("thirdLvl", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
+      timer.scale = 2.5
+      timer.pos = vec2(width() / 2,200)
+      timer.origin = ("center")
+      timer.color = rgb(255,0,0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
