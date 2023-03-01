@@ -351,7 +351,7 @@ scene("game", () => {
           destroy(hook);
 
           hookStatus = false;
-          currentScore = 0;
+          currentScore -= 200;
         });
         hook.onUpdate(() => {
           if (hook.pos.y > height()) {
