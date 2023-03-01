@@ -15,7 +15,7 @@ loadSprite("hook", "./sprites/hook.png")
 //usernames correlate with the index of highscores; 
 
 let currentUser = '';
-const userNames = ["Laura","Gonzalo","Itzel","Luna","Fonzi"]
+const userNames = ["King Julien","Gonzalo","Laura","Luna","Itzel"]
 const userHighScores = [10000,9000,8000,2000,1000]
 
 
@@ -31,18 +31,23 @@ function newName(winnerName){
 newName()
 
 //CHECKING HS
+function nameInsert(index){
+  userNames.splice(index,0,currentUser);
+  userNames.pop();
+}
 
 function hsCheck(cs){
+  console.log('barrel')
   for(let i = 0; i < userHighScores.length; i++){
+    console.log(i)
     if(cs > userHighScores[i]){
-      userHighScores.splice(i,0,cs)
-      userHighScores.pop()
+      userHighScores.splice(i,0,cs);
+      userHighScores.pop();
       nameInsert(i)
-      newHsInsert = i
       return true
     }
-    return false
   }
+  return false
 }
 
 let currentScore = 0;
@@ -141,7 +146,6 @@ scene("game", () => {
     fish.move(200, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
-      console.log(1)
     }
   });
   
@@ -169,7 +173,7 @@ scene("game", () => {
   function spawnHook(p) {
     if(!hookStatus){
       hookStatus = true
-      wait(0.5 , () => {
+      wait(0.2 , () => {
         const hook = add([
           sprite("hook"),,
           pos(p),
@@ -229,22 +233,18 @@ scene("game", () => {
       timer.text = timer.time.toFixed(2)
     }
     if(timer.time < 0){
-      console.log(true)
+      hsCheck(currentScore)
       go("gameEnd");
       console.log(currentScore)
     }
 	})
-  
-
-
-
-   
 })
 
 
 // END GAME
 
 scene("gameEnd", () => {
+    console.log(userNames)
     const bg = add([
     sprite("fishingScreen", {
       width: width(),
@@ -258,10 +258,12 @@ scene("gameEnd", () => {
 
   // userScore()
   // highScore()
-  const restart = add([text("Click here to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+  const restart = add([text("Click here or spacebar restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   restart.onClick(() => go("start"))
+  onKeyPress("space", () => {
+    go("start")
+  })
 })
-
 
 go("start");
 
