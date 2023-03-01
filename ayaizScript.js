@@ -33,7 +33,8 @@ loadSprite("fishOne", "./sprites/fish.png");
 loadSprite("fishTwo", "./sprites/fish.png");
 loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
-loadSprite("hook", "./sprites/hook.png")
+loadSprite("hook", "./sprites/hook.png");
+loadSprite("shark", "./sprites/shark.png")
 
 
 //HS vars
@@ -117,7 +118,6 @@ scene("instructionPage", () => {
   const heloo = add([text("Arrow keys to move"), pos(width() / 2, height() / 2),scale(.75,.75), origin("center"), area()]);
   const closed = add([text("Close Page"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   closed.onClick(() => go("start"))
-
 })
 
 // GAMEPLAY 
@@ -185,8 +185,31 @@ scene("game", () => {
     fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
+      console.log(1)
     }
   });
+
+  // Shark sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("shark"),
+      scale(0.3, 0.3),
+      area({width:540,height:300,offset:vec2(40,50)}),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "shark",
+    ]),
+      onUpdate("shark", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranShark = rand(150, 500);
+  onUpdate("shark", (shark) => {
+    shark.move(800, 0);
+    if (shark.pos.x > width()) {
+      destroy(shark);
+    }
+  });
+
   
   onKeyDown("left", () => {
     boat.angle = 6;
@@ -231,6 +254,13 @@ scene("game", () => {
           
           hookStatus = false
           currentScore += 100
+        })
+        hook.onCollide("shark", (shark) => {
+          destroy(shark)
+          destroy(hook)
+          
+          hookStatus = false
+          currentScore += 500
         })
         hook.onUpdate(() => {
           if(hook.pos.y > height()){
@@ -277,6 +307,11 @@ scene("game", () => {
       console.log(currentScore)
     }
 	})
+  
+
+
+
+   
 })
 
 
