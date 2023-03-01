@@ -91,15 +91,29 @@ scene("start", () => {
   // width() / 2, height() / 2
 
   const startText = add([
-    text("Start Game"),
+    text("Start Game" ,{
+      transform: (idx, ch) => ({
+        color: rgb(255,255,255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      })
+    }),
     pos(center()),
     scale(0.75, 0.75),
     origin("center"),
-    area(),
+    area()
   ]);
   startText.onClick(() => go("game"));
   const howTo = add([
-    text("How to Play"),
+    text("How to Play",{
+      transform: (idx, ch) => ({
+        color: rgb(255,255,255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      })
+    }),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
     origin("center"),
