@@ -194,7 +194,7 @@ scene("game", () => {
     add([
       sprite("shark"),
       scale(0.3, 0.3),
-      area(),
+      area({width:540,height:300,offset:vec2(40,50)}),
       pos(0, rand(boat.pos.y + 100, height() - 10)),
       "shark",
     ]),
