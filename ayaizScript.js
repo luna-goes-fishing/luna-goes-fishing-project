@@ -287,20 +287,23 @@ scene("game", () => {
 scene("gameEnd", () => {
   console.log(userNames)
   const bg = add([
-    sprite("fishingScreen", {
-      width: width(),
-      height: height()
-    }),
-    pos(width() / 2, height() / 2),
-    origin("center"),
-    scale(1),
-    fixed()
-  ])
+  sprite("fishingScreen", {
+    width: width(),
+    height: height()
+  }),
+  pos(width() / 2, height() / 2),
+  origin("center"),
+  scale(1),
+  fixed()
+])
 
-  // userScore()
-  // highScore()
-  const restart = add([text("Click here to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
-  restart.onClick(() => go("start"))
+// userScore()
+// highScore()
+const restart = add([text("Click here or R to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+restart.onClick(() => go("start"))
+onKeyPress("r", () => {
+  go("start")
+})
 })
 
 
