@@ -33,7 +33,8 @@ loadSprite("fishOne", "./sprites/fish.png");
 loadSprite("fishTwo", "./sprites/fish.png");
 loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
-loadSprite("hook", "./sprites/hook.png")
+loadSprite("hook", "./sprites/hook.png");
+loadSprite("shark", "./sprites/shark.png")
 
 
 //HS vars
@@ -187,6 +188,28 @@ scene("game", () => {
       console.log(1)
     }
   });
+
+  // Shark sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("shark"),
+      scale(0.3, 0.3),
+      area(),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "shark",
+    ]),
+      onUpdate("shark", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranShark = rand(150, 500);
+  onUpdate("shark", (shark) => {
+    shark.move(800, 0);
+    if (shark.pos.x > width()) {
+      destroy(shark);
+    }
+  });
+
   
   onKeyDown("left", () => {
     boat.angle = 6;
@@ -231,6 +254,13 @@ scene("game", () => {
           
           hookStatus = false
           currentScore += 100
+        })
+        hook.onCollide("shark", (shark) => {
+          destroy(shark)
+          destroy(hook)
+          
+          hookStatus = false
+          currentScore += 500
         })
         hook.onUpdate(() => {
           if(hook.pos.y > height()){
