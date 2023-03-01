@@ -35,6 +35,7 @@ loadSprite("fishThree", "./sprites/fish.png");
 loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png");
 loadSprite("shark", "./sprites/shark.png");
+loadSprite("turtle", "./sprites/turtle.png");
 
 //HS vars
 
@@ -91,28 +92,28 @@ scene("start", () => {
   // width() / 2, height() / 2
 
   const startText = add([
-    text("Start Game" ,{
+    text("Start Game", {
       transform: (idx, ch) => ({
-        color: rgb(255,255,255),
+        color: rgb(255, 255, 255),
         pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
         scale: wave(1, 1.2, time() * 3 + idx),
         angle: wave(-24, 9, time() * 3 + idx),
-      })
+      }),
     }),
     pos(center()),
     scale(0.75, 0.75),
     origin("center"),
-    area()
+    area(),
   ]);
   startText.onClick(() => go("game"));
   const howTo = add([
-    text("How to Play",{
+    text("How to Play", {
       transform: (idx, ch) => ({
-        color: rgb(255,255,255),
+        color: rgb(255, 255, 255),
         pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
         scale: wave(1, 1.2, time() * 3 + idx),
         angle: wave(-24, 9, time() * 3 + idx),
-      })
+      }),
     }),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
@@ -182,12 +183,11 @@ scene("game", () => {
     // pos(center()),
     scale(0.45, 0.45),
     origin("topleft"),
-    
 
     // origin(),
     area(),
   ]);
-  
+
   const boat = add([
     sprite("boat"),
     pos(width() / 2, height() / 2),
@@ -299,6 +299,27 @@ scene("game", () => {
     }
   });
 
+  // Turtle sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("turtle"),
+      scale(0.3, 0.3),
+      area({ width: 540, height: 300, offset: vec2(40, 50) }),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "turtle",
+    ]),
+      onUpdate("turtle", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranTurtle = rand(150, 500);
+  onUpdate("turtle", (turtle) => {
+    turtle.move(100, 0);
+    if (turtle.pos.x > width()) {
+      destroy(turtle);
+    }
+  });
+
   onKeyDown("left", () => {
     boat.angle = 6;
     boat.flipX(true);
@@ -351,6 +372,13 @@ scene("game", () => {
           hookStatus = false;
           currentScore += 500;
         });
+        hook.onCollide("turtle", (turtle) => {
+          destroy(turtle);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore -= 200;
+        });
         hook.onUpdate(() => {
           if (hook.pos.y > height()) {
             destroy(hook);
@@ -389,18 +417,18 @@ scene("game", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
-      timer.scale = 2.5
-      timer.pos = vec2(width() / 2,200)
-      timer.origin = ("center")
-      timer.color = rgb(255,0,0);
+      timer.scale = 2.5;
+      timer.pos = vec2(width() / 2, 200);
+      timer.origin = "center";
+      timer.color = rgb(255, 0, 0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
       go("gameEnd");
       console.log(currentScore);
     }
-    if (timer.time < 0 && targetScore <= currentScore){
-      go("secondLvlPage")
+    if (timer.time < 0 && targetScore <= currentScore) {
+      go("secondLvlPage");
     }
   });
 });
@@ -490,12 +518,9 @@ scene("gameEnd", () => {
   });
 });
 
-
-
-
 //Second level Page
-scene("secondLvlPage",() => {
-const bg = add([
+scene("secondLvlPage", () => {
+  const bg = add([
     sprite("fishingScreen", {
       width: width(),
       height: height(),
@@ -526,7 +551,7 @@ const bg = add([
   onKeyPress("enter", () => {
     go("secondLvl");
   });
-})
+});
 
 scene("secondLvl", () => {
   let targetScore = 4000;
@@ -546,7 +571,6 @@ scene("secondLvl", () => {
     // pos(center()),
     scale(0.45, 0.45),
     origin("topleft"),
-    
 
     // origin(),
     area(),
@@ -663,6 +687,27 @@ scene("secondLvl", () => {
     }
   });
 
+  // Turtle sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("turtle"),
+      scale(0.3, 0.3),
+      area({ width: 540, height: 300, offset: vec2(40, 50) }),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "turtle",
+    ]),
+      onUpdate("turtle", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranTurtle = rand(150, 500);
+  onUpdate("turtle", (turtle) => {
+    turtle.move(100, 0);
+    if (turtle.pos.x > width()) {
+      destroy(turtle);
+    }
+  });
+
   onKeyDown("left", () => {
     boat.angle = 6;
     boat.flipX(true);
@@ -714,6 +759,13 @@ scene("secondLvl", () => {
 
           hookStatus = false;
           currentScore += 500;
+        });
+        hook.onCollide("turtle", (turtle) => {
+          destroy(turtle);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore -= 200;
         });
         hook.onUpdate(() => {
           if (hook.pos.y > height()) {
@@ -753,23 +805,20 @@ scene("secondLvl", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
-      timer.scale = 2.5
-      timer.pos = vec2(width() / 2,200)
-      timer.origin = ("center")
-      timer.color = rgb(255,0,0);
+      timer.scale = 2.5;
+      timer.pos = vec2(width() / 2, 200);
+      timer.origin = "center";
+      timer.color = rgb(255, 0, 0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
       go("gameEnd");
       console.log(currentScore);
     }
-    if (timer.time < 0 && targetScore <= currentScore){
-      go("thirdLvlPage")
+    if (timer.time < 0 && targetScore <= currentScore) {
+      go("thirdLvlPage");
     }
   });
-  
-
-
 });
 
 scene("thirdLvlPage", () => {
@@ -789,7 +838,7 @@ scene("thirdLvlPage", () => {
     scale(0.75, 0.75),
     origin("center"),
     area(),
-  ])
+  ]);
 
   const nextLvl = add([
     text("Click here or Enter to Start"),
@@ -797,12 +846,11 @@ scene("thirdLvlPage", () => {
     scale(0.75, 0.75),
     origin("center"),
     area(),
-  ])
+  ]);
   onKeyPress("enter", () => {
     go("thirdLvl");
   });
   nextLvl.onClick(() => go("thirdLvl"));
-
 });
 
 // Third level page
@@ -825,12 +873,11 @@ scene("thirdLvl", () => {
     // pos(center()),
     scale(0.45, 0.45),
     origin("topleft"),
-    
 
     // origin(),
     area(),
   ]);
-  
+
   const boat = add([
     sprite("boat"),
     pos(width() / 2, height() / 2),
@@ -942,6 +989,27 @@ scene("thirdLvl", () => {
     }
   });
 
+  // Turtle sprite spawn
+  loop(rand(5, 10), () => {
+    add([
+      sprite("turtle"),
+      scale(0.3, 0.3),
+      area({ width: 540, height: 300, offset: vec2(40, 50) }),
+      pos(0, rand(boat.pos.y + 100, height() - 10)),
+      "turtle",
+    ]),
+      onUpdate("turtle", (fThree) => {
+        //   fThree.move(0, 0);
+      });
+  });
+  let ranTurtle = rand(150, 500);
+  onUpdate("turtle", (turtle) => {
+    turtle.move(100, 0);
+    if (turtle.pos.x > width()) {
+      destroy(turtle);
+    }
+  });
+
   onKeyDown("left", () => {
     boat.angle = 6;
     boat.flipX(true);
@@ -994,6 +1062,13 @@ scene("thirdLvl", () => {
           hookStatus = false;
           currentScore += 500;
         });
+        hook.onCollide("turtle", (turtle) => {
+          destroy(turtle);
+          destroy(hook);
+
+          hookStatus = false;
+          currentScore -= 200;
+        });
         hook.onUpdate(() => {
           if (hook.pos.y > height()) {
             destroy(hook);
@@ -1032,19 +1107,19 @@ scene("thirdLvl", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
-      timer.scale = 2.5
-      timer.pos = vec2(width() / 2,200)
-      timer.origin = ("center")
-      timer.color = rgb(255,0,0);
+      timer.scale = 2.5;
+      timer.pos = vec2(width() / 2, 200);
+      timer.origin = "center";
+      timer.color = rgb(255, 0, 0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
       go("gameEnd");
       console.log(currentScore);
     }
-    if (timer.time < 0 && targetScore <= currentScore){
+    if (timer.time < 0 && targetScore <= currentScore) {
       hsCheck(currentScore);
-      go("gameEnd")
+      go("gameEnd");
     }
   });
 });
