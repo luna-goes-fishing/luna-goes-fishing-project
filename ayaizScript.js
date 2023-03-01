@@ -54,7 +54,7 @@ function newName(winnerName) {
     currentUser = input;
   }
 }
-// newName();
+newName();
 
 //CHECKING HS
 function nameInsert(index) {
