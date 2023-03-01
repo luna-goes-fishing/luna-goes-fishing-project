@@ -363,6 +363,10 @@ scene("game", () => {
       timer.text = timer.time.toFixed(0);
     } else {
       timer.text = timer.time.toFixed(2);
+      timer.scale = 2.5
+      timer.pos = vec2(width() / 2,200)
+      timer.origin = ("center")
+      timer.color = rgb(255,0,0)
     }
     if (timer.time < 0) {
       hsCheck(currentScore);
