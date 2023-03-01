@@ -41,21 +41,10 @@ loadSprite("turtle", "./sprites/turtle.png");
 
 //usernames correlate with the index of highscores;
 
-let currentUser = "";
+let currentUser = "Luna";
 let targetScore = 2000;
-const userNames = ["King Julien", "Gonzalo", "Laura", "Luna", "Itzel"];
+const userNames = ["King Julien", "Gonzalo", "Laura", "Carmen", "Itzel"];
 const userHighScores = [10000, 9000, 8000, 2000, 1000];
-
-//getting username
-function newName(winnerName) {
-  let input = prompt("Please enter your name:", "");
-  if (input == null || input == "") {
-    newName(winnerName);
-  } else {
-    currentUser = input;
-  }
-}
-newName();
 
 //CHECKING HS
 function nameInsert(index) {
