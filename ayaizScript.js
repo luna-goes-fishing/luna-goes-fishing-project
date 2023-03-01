@@ -95,6 +95,9 @@ scene("start", () => {
   startText.onClick(() => go("game"))
   const howTo = add([text("How to Play"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
   howTo.onClick(() => go("instructionPage"))
+  onKeyPress("enter", () => {
+    go("game")
+  })
 })
 
 //INSTRUCTIONS
@@ -291,19 +294,72 @@ scene("gameEnd", () => {
     width: width(),
     height: height()
   }),
-  pos(width() / 2, height() / 2),
-  origin("center"),
-  scale(1),
-  fixed()
-])
+    pos(width() / 2, height() / 2),
+    origin("center"),
+    scale(1),
+    fixed()
+  ])
+
+  //Scores 
+  const hstext = add([
+		text("High Scores:"),
+		pos(width()/2, 80),
+    scale(1),
+    origin("center"),
+		fixed(),
+	]) 
+  console.log(hstext.pos.y)
+  const score1 = add([
+		text(`${userNames[0]}:${userHighScores[0]}`),
+		pos(width()/2, hstext.pos.y + 80),
+    scale(0.5),
+    origin("center"),
+		fixed(),
+	])
+  const score2 = add([
+		text(`${userNames[1]}:${userHighScores[1]}`),
+		pos(width()/2, score1.pos.y + 50),,
+    scale(0.5),
+    origin("center"),
+		fixed(),
+	])
+  const score3 = add([
+		text(`${userNames[2]}:${userHighScores[2]}`),
+    pos(width()/2, score2.pos.y + 50),    
+    scale(0.5),
+    origin("center"),
+		fixed(),
+	])
+  const score4 = add([
+		text(`${userNames[3]}:${userHighScores[3]}`),
+		pos(width()/2, score3.pos.y + 50),
+    scale(0.5),
+    origin("center"),
+		fixed(),
+	])
+  const score5 = add([
+		text(`${userNames[4]}:${userHighScores[4]}`),
+		pos(width()/2, score4.pos.y + 50),,
+    scale(0.5),
+    origin("center"),
+		fixed(),
+	])
+  const displayScore = add([
+		text(`You got: ${currentScore}`),
+		pos(width()/2, score5.pos.y + 65),
+    scale(1),
+    origin("center"),
+		fixed(),
+	]) 
 
 // userScore()
 // highScore()
-const restart = add([text("Click here or R to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
-restart.onClick(() => go("start"))
-onKeyPress("r", () => {
-  go("start")
-})
+  const restart = add([text("Click here or R to restart"), pos(width() / 2, height() / 1.5),scale(.75,.75), origin("center"), area()]);
+ 
+  restart.onClick(() => go("start"))
+  onKeyPress("r", () => {
+    go("start")
+  })
 })
 
 
