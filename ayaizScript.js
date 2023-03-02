@@ -1,33 +1,9 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
-// kaboom({
-//     // Initialize the game
-//     global: true,
-//     fullscreen: true,
-//     scale: 1,
-//     background: [68, 118, 207],
-//     // canvas: document.querySelector("#background")
-//   });
-//   loadSprite("background", "pixil-frame-0-2.png");
-//   add([
-//     sprite("background"),
-//     pos(1, 0),
-//     pos(width() / 2, height() / 2),
-//     origin("center"),
-//     scale(0.4999, 0.4),
-
-//     layer("background")
-//   ]);
-// const backround = document.querySelector("body")
-// console.log(backround)
-// kaboom({
-//   // canvas: backround
-
-// });
-
 kaboom();
 
-loadSprite("fishingScreen", "fishingScreen.png");
+
+loadSprite("fishingScreen", "./fishingScreen.png");
 loadSprite("fish", "./sprites/fish.png");
 loadSprite("fishOne", "./sprites/fish.png");
 loadSprite("fishTwo", "./sprites/fish.png");
@@ -36,15 +12,28 @@ loadSprite("boat", "./sprites/boat.png");
 loadSprite("hook", "./sprites/hook.png");
 loadSprite("shark", "./sprites/shark.png");
 loadSprite("turtle", "./sprites/turtle.png");
+loadSound("game-music", "./music/game-music.mp3");
+loadSound("lobby-music", "./music/lobby-music.mp3");
+loadSound("end-music", "./music/end-music.mp3");
+
+// music on and off attributes
+
+let gameMusic;
+let lobbyMusic; 
+let endMusic;
+
+let lobbyMusicOn = false;
 
 //HS vars
-
 //usernames correlate with the index of highscores;
 
 let currentUser = "Luna";
 let targetScore = 2000;
 const userNames = ["King Julien", "Gonzalo", "Laura", "Carmen", "Itzel"];
 const userHighScores = [10000, 9000, 8000, 2000, 1000];
+
+
+
 
 //CHECKING HS
 function nameInsert(index) {
@@ -54,7 +43,6 @@ function nameInsert(index) {
 
 function hsCheck(cs) {
   for (let i = 0; i < userHighScores.length; i++) {
-    console.log(i);
     if (cs > userHighScores[i]) {
       userHighScores.splice(i, 0, cs);
       userHighScores.pop();
@@ -67,7 +55,15 @@ function hsCheck(cs) {
 
 let currentScore = 0;
 
+
+
 scene("start", () => {
+  if(!lobbyMusicOn){
+    lobbyMusicOn = true
+    lobbyMusic = play("lobby-music", {
+      loop: true,
+    })
+  }
   const bg = add([
     sprite("fishingScreen", {
       width: width(),
@@ -78,6 +74,9 @@ scene("start", () => {
     scale(1),
     fixed(),
   ]);
+  
+
+  
   // width() / 2, height() / 2
   
   const startText = add([
@@ -110,7 +109,11 @@ scene("start", () => {
     area(),
   ]);
 
-  startText.onClick(() => go("game"));
+  startText.onClick(() => {
+    lobbyMusicOn = false;
+    lobbyMusic.stop();
+    go("game");
+  });
   const howTo = add([
     text("How to Play", {
       transform: (idx, ch) => ({
@@ -125,9 +128,14 @@ scene("start", () => {
     origin("center"),
     area(),
   ]);
-  howTo.onClick(() => go("instructionPage"));
+  
+  howTo.onClick(() => {
+    go("instructionPage");
+  });
   onKeyPress("enter", () => {
-    go("game");
+    lobbyMusicOn = false
+    lobbyMusic.stop()
+    go("game");   
   });
 });
 
@@ -178,6 +186,9 @@ scene("instructionPage", () => {
 // GAMEPLAY
 
 scene("game", () => {
+  gameMusic = play("game-music", {
+    loop: true,
+  })
   currentScore = 0;
   const bg = add([
     sprite("fishingScreen", {
@@ -286,7 +297,6 @@ scene("game", () => {
     fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
-      console.log(1);
     }
   });
 
@@ -436,10 +446,11 @@ scene("game", () => {
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
+      gameMusic.stop()
       go("gameEnd");
-      console.log(currentScore);
     }
     if (timer.time < 0 && targetScore <= currentScore) {
+      gameMusic.pause()
       go("secondLvlPage");
     }
   });
@@ -448,6 +459,9 @@ scene("game", () => {
 // END GAME
 
 scene("gameEnd", () => {
+  endMusic = play("end-music", {
+    loop: true,
+  })
   const bg = add([
     sprite("fishingScreen", {
       width: width(),
@@ -584,8 +598,12 @@ scene("gameEnd", () => {
     area(),
   ]);
 
-  restart.onClick(() => go("start"));
+  restart.onClick(() => {
+    endMusic.stop()
+    go("start");
+  });
   onKeyPress("r", () => {
+    endMusic.stop()
     go("start");
   });
 });
@@ -640,6 +658,7 @@ scene("secondLvlPage", () => {
 });
 
 scene("secondLvl", () => {
+  gameMusic.play()
   let targetScore = 4000;
   const bg = add([
     sprite("fishingScreen", {
@@ -748,7 +767,6 @@ scene("secondLvl", () => {
     fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
-      console.log(1);
     }
   });
 
@@ -897,11 +915,12 @@ scene("secondLvl", () => {
       timer.color = rgb(255, 0, 0);
     }
     if (timer.time < 0 && targetScore >= currentScore) {
-      hsCheck(currentScore);
+      gameMusic.stop()
       go("gameEnd");
-      console.log(currentScore);
+
     }
     if (timer.time < 0 && targetScore <= currentScore) {
+      gameMusic.pause()
       go("thirdLvlPage");
     }
   });
@@ -957,6 +976,7 @@ scene("thirdLvlPage", () => {
 // Third level page
 
 scene("thirdLvl", () => {
+  gameMusic.play()
   let targetScore = 9000;
   const bg = add([
     sprite("fishingScreen", {
@@ -1065,7 +1085,6 @@ scene("thirdLvl", () => {
     fish.move(300, 0);
     if (fish.pos.x > width()) {
       destroy(fish);
-      console.log(1);
     }
   });
 
@@ -1215,14 +1234,16 @@ scene("thirdLvl", () => {
     }
     if (timer.time < 0 && targetScore >= currentScore) {
       hsCheck(currentScore);
+      gameMusic.stop()
       go("gameEnd");
-      console.log(currentScore);
     }
     if (timer.time < 0 && targetScore <= currentScore) {
       hsCheck(currentScore);
+      gameMusic.stop()
       go("gameEnd");
     }
   });
 });
 
-go("gameEnd");
+
+go("start");
