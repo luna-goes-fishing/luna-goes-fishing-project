@@ -79,7 +79,7 @@ scene("start", () => {
     fixed(),
   ]);
   // width() / 2, height() / 2
-
+  
   const startText = add([
     text("Start Game", {
       transform: (idx, ch) => ({
@@ -94,6 +94,22 @@ scene("start", () => {
     origin("center"),
     area(),
   ]);
+  
+  const titleText = add([
+    text("Luna Goes Fishing", {
+      transform: (idx, ch) => ({
+        color: rgb(247, 108, 57),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width()/2,startText.pos.y/2),
+    scale(1.5),
+    origin("center"),
+    area(),
+  ]);
+
   startText.onClick(() => go("game"));
   const howTo = add([
     text("How to Play", {
@@ -143,7 +159,14 @@ scene("instructionPage", () => {
     area(),
   ]);
   const closed = add([
-    text("Close Page"),
+    text("Close Page",{
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
     origin("center"),
@@ -168,9 +191,9 @@ scene("game", () => {
   ]);
 
   const targetText = add([
-    text("Target Scrore : 2000"),
+    text("Target Score : 2000"),
     // pos(center()),
-    scale(0.45, 0.45),
+    scale(0.6),
     origin("topleft"),
 
     // origin(),
@@ -425,7 +448,6 @@ scene("game", () => {
 // END GAME
 
 scene("gameEnd", () => {
-  console.log(userNames);
   const bg = add([
     sprite("fishingScreen", {
       width: width(),
@@ -439,53 +461,107 @@ scene("gameEnd", () => {
 
   //Scores
   const hstext = add([
-    text("High Scores:"),
+    text("High Scores:",{
+      transform: (idx, ch) => ({
+        color: rgb(210, 210, 210),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, 80),
     scale(1),
     origin("center"),
     fixed(),
   ]);
-  console.log(hstext.pos.y);
   const score1 = add([
-    text(`${userNames[0]}:${userHighScores[0]}`),
+    text(`${userNames[0]}:${userHighScores[0]}`,{
+      transform: (idx, ch) => ({
+        color: rgb(194, 6, 32),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, hstext.pos.y + 80),
     scale(0.5),
     origin("center"),
     fixed(),
   ]);
+
   const score2 = add([
-    text(`${userNames[1]}:${userHighScores[1]}`),
+    text(`${userNames[1]}:${userHighScores[1]}`,{
+      transform: (idx, ch) => ({
+        color: rgb(247, 108, 57),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, score1.pos.y + 50),
     ,
     scale(0.5),
     origin("center"),
     fixed(),
   ]);
+
   const score3 = add([
-    text(`${userNames[2]}:${userHighScores[2]}`),
+    text(`${userNames[2]}:${userHighScores[2]}`,{
+      transform: (idx, ch) => ({
+        color: rgb(218, 159, 147),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, score2.pos.y + 50),
     scale(0.5),
     origin("center"),
     fixed(),
   ]);
+
   const score4 = add([
-    text(`${userNames[3]}:${userHighScores[3]}`),
+    text(`${userNames[3]}:${userHighScores[3]}`,{
+      transform: (idx, ch) => ({
+        color: rgb(235, 212, 203),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, score3.pos.y + 50),
     scale(0.5),
     origin("center"),
     fixed(),
   ]);
+
+  // 255, 251, 255
   const score5 = add([
-    text(`${userNames[4]}:${userHighScores[4]}`),
+    text(`${userNames[4]}:${userHighScores[4]}`,{
+      transform: (idx, ch) => ({
+        color: rgb(255, 251, 255),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, score4.pos.y + 50),
     ,
     scale(0.5),
     origin("center"),
     fixed(),
   ]);
+
   const displayScore = add([
-    text(`Your Score: ${currentScore}`),
-    pos(width() / 2, score5.pos.y + 65),
+    text(`Your Score: ${currentScore}`,{
+      transform: (idx, ch) => ({
+        color: rgb(83, 145, 126),
+        pos: vec2(0, wave(-2, 2, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(0, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, score5.pos.y + 70),
     scale(1),
     origin("center"),
     fixed(),
@@ -494,7 +570,14 @@ scene("gameEnd", () => {
   // userScore()
   // highScore()
   const restart = add([
-    text("Click here or R to restart"),
+    text("Click here or R to restart", {
+      transform: (idx, ch) => ({
+        color: rgb(185, 230, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 1.3),
     scale(0.75, 0.75),
     origin("center"),
@@ -521,15 +604,29 @@ scene("secondLvlPage", () => {
   ]);
 
   const secondText = add([
-    text("Second Level"),
+    text("Level 2!", {
+      transform: (idx, ch) => ({
+        color: rgb(255, 166, 158),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 2),
-    scale(0.75, 0.75),
+    scale(1),
     origin("center"),
     area(),
   ]);
 
   const startText = add([
-    text("Click here or Enter to Start"),
+    text("Click here or Enter to Start", {
+      transform: (idx, ch) => ({
+        color: rgb(185, 230, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
     origin("center"),
@@ -556,9 +653,9 @@ scene("secondLvl", () => {
   ]);
 
   const targetText = add([
-    text("Target Scrore : 4000"),
+    text("Target Score : 4000"),
     // pos(center()),
-    scale(0.45, 0.45),
+    scale(0.6),
     origin("topleft"),
 
     // origin(),
@@ -821,16 +918,31 @@ scene("thirdLvlPage", () => {
     scale(1),
     fixed(),
   ]);
+  // 209, 73, 91
   const thirdText = add([
-    text("Third Level"),
+    text("Final Level!", {
+      transform: (idx, ch) => ({
+        color: rgb(209, 73, 91),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
     pos(center()),
-    scale(0.75, 0.75),
+    scale(1, 1),
     origin("center"),
     area(),
   ]);
 
   const nextLvl = add([
-    text("Click here or Enter to Start"),
+    text("Click here or Enter to Start", {
+      transform: (idx, ch) => ({
+        color: rgb(185, 230, 255),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 1.5),
     scale(0.75, 0.75),
     origin("center"),
@@ -858,9 +970,9 @@ scene("thirdLvl", () => {
   ]);
 
   const targetText = add([
-    text("Target Scrore : 9000"),
+    text("Target Score : 9000"),
     // pos(center()),
-    scale(0.45, 0.45),
+    scale(0.6),
     origin("topleft"),
 
     // origin(),
@@ -1113,4 +1225,4 @@ scene("thirdLvl", () => {
   });
 });
 
-go("start");
+go("gameEnd");
