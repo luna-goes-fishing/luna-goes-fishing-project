@@ -75,47 +75,9 @@ scene("start", () => {
     fixed(),
   ]);
   
-
-  
   // width() / 2, height() / 2
-  
-  const startText = add([
-    text("Start Game", {
-      transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
-    }),
-    pos(center()),
-    scale(0.75, 0.75),
-    origin("center"),
-    area(),
-  ]);
-  
-  const titleText = add([
-    text("Luna Goes Fishing", {
-      transform: (idx, ch) => ({
-        color: rgb(247, 108, 57),
-        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
-        scale: wave(1, 1.2, time() * 3 + idx),
-        angle: wave(-24, 9, time() * 3 + idx),
-      }),
-    }),
-    pos(width()/2,startText.pos.y/2),
-    scale(1.5),
-    origin("center"),
-    area(),
-  ]);
-
-  startText.onClick(() => {
-    lobbyMusicOn = false;
-    lobbyMusic.stop();
-    go("game");
-  });
-  const howTo = add([
-    text("How to Play", {
+  const startGame = add([
+    text("Click or Press Enter to Continue", {
       transform: (idx, ch) => ({
         color: rgb(255, 255, 255),
         pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
@@ -128,14 +90,27 @@ scene("start", () => {
     origin("center"),
     area(),
   ]);
+
+  const titleText = add([
+    text("Luna Goes Fishing", {
+      transform: (idx, ch) => ({
+        color: rgb(247, 108, 57),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width()/2,startGame.pos.y/2),
+    scale(1.5),
+    origin("center"),
+    area(),
+  ]);
   
-  howTo.onClick(() => {
+  onMousePress(() => {
     go("instructionPage");
   });
   onKeyPress("enter", () => {
-    lobbyMusicOn = false
-    lobbyMusic.stop()
-    go("game");   
+    go("instructionPage");   
   });
 });
 
@@ -152,24 +127,105 @@ scene("instructionPage", () => {
     scale(1),
     fixed(),
   ]);
-  const yeloo = add([
-    text("Spacebar to drop hook"),
+
+  const fish = add([
+    sprite("fish"),
+    pos(width()/2, height()/4),
+    origin("center"),
+    scale(0.3, 0.3),
+    action("boat"),
+  ]);
+  const turtle = add([
+    sprite("turtle"),
+    pos(width()/4, height()/4),
+    origin("center"),
+    scale(0.3, 0.3),
+    action("boat"),
+  ]);
+  const shark = add([
+    sprite("shark"),
+    pos(width()/1.4, height()/4),
+    origin("center"),
+    scale(0.3, 0.3),
+    action("boat"),
+  ]);
+
+  const fishText = add([
+    text("Worth 100",{
+      transform: (idx, ch) => ({
+        color: rgb(98, 109, 88),
+        pos: vec2(0, wave(-1, 1, time() * 4 + idx * 0.2)),
+        scale: wave(1, 1.1, time() * 3 + idx),
+        angle: wave(-8, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width()/2, height()/8),
+    scale(0.5),
+    origin("center"),
+    area(),
+  ]);
+  const turtleText = add([
+    text("Lose 200",{
+      transform: (idx, ch) => ({
+        color: rgb(247, 23, 53),
+        pos: vec2(0, wave(-1, 1, time() * 4 + idx * 0.2)),
+        scale: wave(1, 1.1, time() * 3 + idx),
+        angle: wave(-8, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width()/4, height()/8),
+    scale(0.5),
+    origin("center"),
+    area(),
+  ]);
+  const sharkText = add([
+    text("Worth 1000",{
+      transform: (idx, ch) => ({
+        color: hsl2rgb((time() * 0.2 + idx * 0.1) % 1, 0.7, 0.8),
+        pos: vec2(0, wave(-1, 1, time() * 4 + idx * 0.2)),
+        scale: wave(1, 1.1, time() * 3 + idx),
+        angle: wave(-8, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width()/1.4, height()/8),
+    scale(0.5),
+    origin("center"),
+    area(),
+  ]);
+
+  const spacebar = add([
+    text("Spacebar to drop hook",{
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-1, 1, time() * 4 + idx * 0.2)),
+        scale: wave(1, 1.1, time() * 3 + idx),
+        angle: wave(-8, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 2.4),
     scale(0.75, 0.75),
     origin("center"),
     area(),
   ]);
-  const heloo = add([
-    text("Arrow keys to move"),
+  const arrowKeys = add([
+    text("Press Left and Right Arrow To Move",{
+      transform: (idx, ch) => ({
+        color: rgb(255, 255, 255),
+        pos: vec2(0, wave(-1, 1, time() * 4 + idx * 0.2)),
+        scale: wave(1, 1.1, time() * 3 + idx),
+        angle: wave(-8, 9, time() * 3 + idx),
+      }),
+    }),
     pos(width() / 2, height() / 2),
     scale(0.75, 0.75),
     origin("center"),
     area(),
   ]);
+
   const closed = add([
-    text("Close Page",{
+    text("Press B to return Home",{
       transform: (idx, ch) => ({
-        color: rgb(255, 255, 255),
+        color: rgb(247, 108, 57),
         pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
         scale: wave(1, 1.2, time() * 3 + idx),
         angle: wave(-24, 9, time() * 3 + idx),
@@ -180,7 +236,29 @@ scene("instructionPage", () => {
     origin("center"),
     area(),
   ]);
-  closed.onClick(() => go("start"));
+
+  const begin = add([
+    text("Press Enter to Play!",{
+      transform: (idx, ch) => ({
+        color: rgb(247, 108, 57),
+        pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
+        scale: wave(1, 1.2, time() * 3 + idx),
+        angle: wave(-24, 9, time() * 3 + idx),
+      }),
+    }),
+    pos(width() / 2, height() / 1.2),
+    scale(0.75, 0.75),
+    origin("center"),
+    area(),
+  ]);
+  onKeyPress("b", () => {
+    go("start");   
+  });
+  onKeyPress("enter", () => {
+    lobbyMusic.stop()
+    lobbyMusicOn = false
+    go("game");   
+  });
 });
 
 // GAMEPLAY
@@ -584,7 +662,7 @@ scene("gameEnd", () => {
   // userScore()
   // highScore()
   const restart = add([
-    text("Click here or R to restart", {
+    text("Click to go Home or R to restart", {
       transform: (idx, ch) => ({
         color: rgb(185, 230, 255),
         pos: vec2(0, wave(-4, 4, time() * 4 + idx * 0.5)),
@@ -598,13 +676,13 @@ scene("gameEnd", () => {
     area(),
   ]);
 
-  restart.onClick(() => {
+  onClick(() => {
     endMusic.stop()
     go("start");
   });
   onKeyPress("r", () => {
     endMusic.stop()
-    go("start");
+    go("game");
   });
 });
 
